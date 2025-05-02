@@ -1,0 +1,62 @@
+clc; 
+clear; 
+close all;
+
+x = [0, 0.0575, 0.061, 0.1455, 0.2285, 0.3095, 0.3125, 0.42, 0.4355, 0.519, 0.631, 0.735, 0.7675, 0.8585, 0.91, 1];
+yeq = [0, 0.11, 0.111, 0.2325, 0.351, 0.4435, 0.45, 0.5545, 0.5725, 0.66, 0.748, 0.8225, 0.8495, 0.9175, 0.9525, 1];
+y = x;
+
+plot(x, yeq, 'k-', 'LineWidth', 1.5); hold on;
+plot(x, y, 'r-', 'LineWidth', 1.5);
+
+yline = linspace(0, 1, 100);
+plot(0.10 * ones(size(yline)), yline, 'b--', 'LineWidth', 1);
+plot(0.62 * ones(size(yline)), yline, 'b--', 'LineWidth', 1);
+y_intersect1 = interp1(yeq, x, 0.62);
+plot([0.62, y_intersect1], [0.62, 0.62], 'y-', 'LineWidth', 1.5);
+plot(y_intersect1, 0.62, 'go', 'MarkerFaceColor', 'm');
+x_next1 = y_intersect1;
+y_next1 = interp1(x, y, x_next1);
+plot([x_next1, x_next1], [0.62, y_next1], 'y-', 'LineWidth', 1.5);
+plot(x_next1, y_next1, 'co', 'MarkerFaceColor', 'm');
+y_intersect2 = interp1(yeq, x, y_next1);
+plot([x_next1, y_intersect2], [y_next1, y_next1], 'y-', 'LineWidth', 1.5);
+plot(y_intersect2, y_next1, 'go', 'MarkerFaceColor', 'm');
+x_next2 = y_intersect2;
+y_next2 = interp1(x, y, x_next2);
+plot([x_next2, x_next2], [y_next1, y_next2], 'y-', 'LineWidth', 1.5);
+plot(x_next2, y_next2, 'co', 'MarkerFaceColor', 'm');
+y_intersect3 = interp1(yeq, x, y_next2);
+plot([x_next2, y_intersect3], [y_next2, y_next2], 'y-', 'LineWidth', 1.5);
+plot(y_intersect3, y_next2, 'go', 'MarkerFaceColor', 'm');
+x_next3 = y_intersect3;
+y_next3 = interp1(x, y, x_next3);
+plot([x_next3, x_next3], [y_next2, y_next3], 'y-', 'LineWidth', 1.5);
+plot(x_next3, y_next3, 'co', 'MarkerFaceColor', 'm');
+y_intersect4 = interp1(yeq, x, y_next3);
+plot([x_next3, y_intersect4], [y_next3, y_next3], 'y-', 'LineWidth', 1.5);
+plot(y_intersect4, y_next3, 'go', 'MarkerFaceColor', 'm');
+x_next4 = y_intersect4;
+y_next4 = interp1(x, y, x_next4);
+plot([x_next4, x_next4], [y_next3, y_next4], 'y-', 'LineWidth', 1.5);
+plot(x_next4, y_next4, 'co', 'MarkerFaceColor', 'm');
+y_intersect5 = interp1(yeq, x, y_next4);
+plot([x_next4, y_intersect5], [y_next4, y_next4], 'y-', 'LineWidth', 1.5);
+plot(y_intersect5, y_next4, 'go', 'MarkerFaceColor', 'm');
+x_intersect_yx = x_next4;
+y_intersect_yx = x_intersect_yx;
+plot(x_intersect_yx, y_intersect_yx, 'ro', 'MarkerFaceColor', 'm');
+y_intersect_010 = interp1(yeq, x, 0.10);
+plot(0.10, y_intersect_yx, 'ro', 'MarkerFaceColor', 'g');
+
+disp(['Intersection with y = x: (', num2str(x_intersect_yx), ', ', num2str(y_intersect_yx), ')']);
+disp(['Intersection with x = 0.10: (0.10, ', num2str(y_intersect_yx), ')']);
+disp(['half plate calculation:',num2str((0.13941-0.10)/(0.13941-0.08076))]);
+fprintf(['Total plates is: 4.67 i.e n+1, so n = 3.67 plates']);
+disp(' ');
+
+xlabel('x', 'FontSize', 12, 'FontWeight', 'bold');
+ylabel('y', 'FontSize', 12, 'FontWeight', 'bold');
+title('Sieve plate Distillation (Number of trays calculation)', 'FontSize', 14, 'FontWeight', 'bold');
+grid on;
+hold off;
